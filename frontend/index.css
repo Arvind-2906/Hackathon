@@ -143,4 +143,10 @@ button:hover {
   form { flex-direction: column; gap: 0.5em;}
   .booking-card, .request-card { font-size: 0.94em; }
 }
+#login-block{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
+
+}

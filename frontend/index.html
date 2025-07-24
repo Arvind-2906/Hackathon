@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Turf Booking System</title>
-  <link rel="stylesheet" href="index.css"/>
+  <link rel="stylesheet" href="index.css" />
   <!-- Google Fonts for a modern look -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
   <script src="index.js" defer></script>
 </head>
+
 <body>
   <div class="container">
     <h1>Turf Booking Portal</h1>
@@ -21,10 +23,21 @@
     </div>
     <!-- User Section -->
     <div id="user-section">
+      <h2> Player Dashboard</h2>
+     
+      <form class="login-form">
+        <div id="login-block">
+        <div id="name">Name:<input type="text" id="i-name" value="Enter name"></div>
+        <div id="email">Email:<input type="email" id="i-email" value="Enter email"></div>
+        <div id="phone">Monile no.:<input type="text" id="i-num" value="Enter number"></div>
+      </div>
+      </form>
+   
+
       <h2>👤 Player Dashboard</h2>
       <form class="booking-form" onsubmit="event.preventDefault(); bookSlot();">
         <select id="turf-select"></select>
-        <input type="date" id="booking-date"/>
+        <input type="date" id="booking-date" />
         <select id="time-slot">
           <option value="6AM-7AM">6AM-7AM</option>
           <option value="7AM-8AM">7AM-8AM</option>
@@ -43,15 +56,15 @@
     <div id="admin-section" style="display: none;">
       <h2>🛠 Admin Dashboard</h2>
       <form class="admin-add-form" onsubmit="event.preventDefault(); addTurf();">
-        <input type="text" id="turf-name" placeholder="Turf Name"/>
-        <input type="text" id="turf-location" placeholder="Location"/>
-        <input type="number" id="turf-price" placeholder="Price per hour"/>
+        <input type="text" id="turf-name" placeholder="Turf Name" />
+        <input type="text" id="turf-location" placeholder="Location" />
+        <input type="number" id="turf-price" placeholder="Price per hour" />
         <button type="submit">Add Turf</button>
       </form>
       <h3>Block Slot</h3>
       <form class="admin-block-form" onsubmit="event.preventDefault(); blockSlot();">
         <select id="block-turf"></select>
-        <input type="date" id="block-date"/>
+        <input type="date" id="block-date" />
         <select id="block-time">
           <option value="6AM-7AM">6AM-7AM</option>
           <option value="7AM-8AM">7AM-8AM</option>
@@ -74,4 +87,5 @@
   </div>
   <script src="index.js"></script>
 </body>
+
 </html>

@@ -12,6 +12,20 @@ function switchRole() {
   renderRequests();
   renderCalendar();
 }
+function addlogin() {
+  const name = document.getElementById("i-name").value.trim();
+  const email = document.getElementById("i-email").value.trim();
+  const mobile = document.getElementById("i-num").value.trim();
+
+  if (!name || !email|| !mobile) {
+    alert("Please fill all turf details.");
+    return;
+  }
+ 
+  document.getElementById("i-name").value = '';
+  document.getElementById("i-email").value = '';
+  document.getElementById("i-num").value = '';
+}
 
 function addTurf() {
   const name = document.getElementById("turf-name").value.trim();
@@ -48,10 +62,13 @@ function blockSlot() {
   const turfIndex = document.getElementById("block-turf").value;
   const date = document.getElementById("block-date").value;
   const time = document.getElementById("block-time").value;
+
+
   if (!date || turfIndex === '') {
     alert("Please select turf and date.");
     return;
-  }
+  } 
+ 
   const turf = turfs[turfIndex];
   const key = `${date}_${time}_${turf.name}_${turf.location}`;
   if (blockedSlots.includes(key)) {
@@ -71,8 +88,15 @@ function bookSlot() {
   const turfIndex = document.getElementById("turf-select").value;
   const date = document.getElementById("booking-date").value;
   const time = document.getElementById("time-slot").value;
+   const name = document.getElementById("i-name").value.trim();
+  const email = document.getElementById("i-email").value.trim();
+  const mobile = document.getElementById("i-num").value.trim();
   if (!date || turfIndex === '') {
     alert("Please select all booking options.");
+    return;
+  }
+   if (!name || !email|| !mobile) {
+    alert("Enter your name,email and mobile number");
     return;
   }
   const turf = turfs[turfIndex];
@@ -86,13 +110,17 @@ function bookSlot() {
     return;
   }
   const booking = {
+
     turf: turf.name,
     location: turf.location,
     price: turf.price,
     date,
     time,
     key: bookingKey,
-    status: "pending"
+    status: "pending",
+    name,
+    email,
+    mobile
   };
   bookings.push(booking);
   alert("Booking requested! Awaiting admin approval.");
@@ -143,7 +171,8 @@ function renderBookings() {
         <div>
           <b>${b.turf} (${b.location})</b><br>
           ${b.date}, ${b.time} - ₹${b.price} 
-          ${statusText}
+          ${statusText}<br>
+          <small>User: ${b.name}| Email:${b.email}| Mobile:${b.mobile}</small>
         </div>
         ${actions}
       </li>`;
@@ -232,6 +261,7 @@ function renderRequests() {
           <div>
             <strong>${b.turf}</strong> (${b.location})<br>
             ${b.date}, ${b.time} - ₹${b.price}
+            <small>User: ${b.name}| Email:${b.email}| Mobile:${b.mobile}</small>
           </div>
           <span class="request-actions">
             <button style="background:#1fbe7b" onclick="approveBooking(${idx})">Approve</button>
@@ -283,7 +313,10 @@ function renderCalendar() {
         if (b) {
           showSlots.push({
             turf: turf.name, location: turf.location, date, time,
-            status: b.status
+            status: b.status,
+            name:b.name,
+            email:b.email,
+            mobile:b.mobile
           });
         } else if (blockedSlots.includes(key)) {
           showSlots.push({
@@ -306,6 +339,16 @@ function renderCalendar() {
       case "approved": statusClass = "approved"; statusLabel="Approved"; break;
       case "blocked": statusClass = "blocked"; statusLabel="Blocked"; break;
       case "rejected": statusClass = "rejected"; statusLabel="Rejected"; break;
+    }
+    let userDetailsHTML="";
+    if(slot.status=='blocked'&& slot.name && slot.email && slot.mobile){
+       userDetailsHTML=`
+       <div style="margin-top:6px; font size:0.75rem;color:#444">
+       Name:${slot.name}
+       Email:${slot.email}
+       Mobile:${slot.mobile}
+       </div>`;
+
     }
     calendar.innerHTML += `
       <div class="calendar-slot ${statusClass}">
